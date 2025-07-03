@@ -5,7 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
-class MainPage extends StatelessWidget{
+class MainPage extends StatefulWidget{
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
   List<Widget> _buildScreens() {
     return [
       HomeScreen(),
@@ -13,6 +18,8 @@ class MainPage extends StatelessWidget{
       ProfileScreen(),
     ];
   }
+
+int page =0;
 
   final PersistentTabController _controller = PersistentTabController(
     initialIndex: 0,
@@ -73,6 +80,7 @@ class MainPage extends StatelessWidget{
       ),
     ];
   }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -81,7 +89,14 @@ class MainPage extends StatelessWidget{
       controller: _controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
+onItemSelected: (index){
+        page =index;
+        print("the index is$index");
+        print("the page is $page");
+        setState(() {
 
+        });
+},
       handleAndroidBackButtonPress: true,
       // Default is true.
       margin: EdgeInsets.only(bottom: 40, left: 10, right: 10),
@@ -95,7 +110,7 @@ class MainPage extends StatelessWidget{
       stateManagement: true,
       // Default is true.
       hideNavigationBarWhenKeyboardAppears: true,
-      backgroundColor: Colors.white,
+      backgroundColor:page ==0? Colors.transparent:Colors.white,
       isVisible: true,
       animationSettings: const NavBarAnimationSettings(
         navBarItemAnimation: ItemAnimationSettings(

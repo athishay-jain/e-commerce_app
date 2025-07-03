@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce_app/Screens/detailed_screen.dart';
 import 'package:ecommerce_app/widgets/like_button_widget.dart';
+import 'package:ecommerce_app/widgets/pop_effect.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -32,14 +35,16 @@ class _HomeScreenState extends State<HomeScreen> {
       "price": "2,499",
       "mrp": "3,299",
       "off": 20,
+      "id":1,
     },
     {
       "image":
-          "https://brain-images-ssl.cdn.dixons.com/5/2/10257225/l_10257225.jpg",
-      "Name": "TurboMax Washing Machine",
-      "price": "14,990",
-      "mrp": "17,500",
-      "off": "65",
+          "https://www.ifbappliances.com/media/opti_image/webp/catalog/product/cache/b0f3fdce25eaff9ceff91545b0591d40/s/e/serena-bxn-k-7.0kg-fv.webp",
+      "Name": "IFB Serena BXN 7012K CMS Front Load Washing Machine 7 kg",
+      "price": "34,490",
+      "mrp": "41,850",
+      "off": "18",
+      "id" : 2,
     },
     {
       "image":
@@ -48,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "price": "23,900",
       "mrp": "23,900",
       "off": "42",
+      "id":3,
     },
     {
       "image":
@@ -56,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "price": "1,599",
       "mrp": "2,199",
       "off": "17",
+      "id" :4,
     },
     {
       "image":
@@ -64,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "price": "38,500",
       "mrp": "43,000",
       "off": "35",
+      "id" :5,
     },
     {
       "image":
@@ -72,6 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "price": "3,750",
       "mrp": "4,499",
       "off": "50",
+      "id" :6,
     },
   ];
   int _currentBanner = 0;
@@ -262,10 +271,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.only(right: 15),
                       child: Column(
                         children: [
-                          CircleAvatar(
-                            radius: 40,
-                            backgroundImage: AssetImage(
-                              categoriesItems[index]["image"],
+                          PopChild(
+                            child: CircleAvatar(
+                              radius: 40,
+                              backgroundImage: AssetImage(
+                                categoriesItems[index]["image"],
+                              ),
                             ),
                           ),
                           SizedBox(height: 6),
@@ -326,7 +337,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 10),
               GridView.builder(
-                padding: EdgeInsets.only(top: 10, left: 20,right: 20,bottom: 110),
+                padding: EdgeInsets.only(
+                  top: 10,
+                  left: 20,
+                  right: 20,
+                  bottom: 110,
+                ),
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 250,
                   childAspectRatio: 9 / 10,
@@ -337,117 +353,132 @@ class _HomeScreenState extends State<HomeScreen> {
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: 5,
                 itemBuilder: (_, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      //color: Color(0xffF5F5F5),
-                      color: Colors.white,
-                    ),
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          top: 0,
-                          left: 10,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(height: 10),
-                              SizedBox(
-                                height: 100,
-                                width: 100,
-                                child: Image.network(
-                                  products[index]["image"],
-                                  fit: BoxFit.cover,
+                  return PopChild(
+                    onTap: () {
+                      PersistentNavBarNavigator.pushNewScreen(
+                        context,
+                        screen: DetailedScreen(product: products[index]),
+                        withNavBar: false,
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        //color: Color(0xffF5F5F5),
+                        color: Colors.white,
+                      ),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 0,
+                            left: 10,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 10),
+                                Hero(
+                                  tag: products[index]["id"].toString(),
+                                  child: SizedBox(
+                                    height: 100,
+                                    width: 100,
+                                    child: Image.network(
+                                      products[index]["image"],
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 160,
-                                child: Text(
-                                  products[index]["Name"],
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                                SizedBox(
+                                  width: 160,
+                                  child: Text(
+                                    products[index]["Name"],
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: "pop",
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  "₹${products[index]["price"]}",
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: "pop",
                                     color: Colors.black,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                "₹${products[index]["price"]}",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: "pop",
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "M.R.P:",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: "pop",
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400,
+                                Row(
+                                  children: [
+                                    Text(
+                                      "M.R.P:",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: "pop",
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w400,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    "₹${products[index]["mrp"]}",
+                                    Text(
+                                      "₹${products[index]["mrp"]}",
 
-                                    style: TextStyle(
-                                      decoration: TextDecoration.lineThrough,
-                                      fontSize: 14,
-                                      fontFamily: "pop",
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400,
+                                      style: TextStyle(
+                                        decoration: TextDecoration.lineThrough,
+                                        fontSize: 14,
+                                        fontFamily: "pop",
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w400,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                          top: 5,
-                          left: 10,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 5,vertical: 3),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.red,
-                            ),
-                            child: Text(
-                              "${products[index]["off"]}%off",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "pop",
-                                color: Colors.white,
-                              ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                        Positioned(
-                          top: 0,
-                          right: 0,
-                          child: Container(
-                            height: 45,
-                            width: 45,
-                            decoration: BoxDecoration(
-                              color: Color(0xff64B5F6),
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(20),
-                                bottomLeft: Radius.circular(10),
+                          Positioned(
+                            top: 5,
+                            left: 10,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 5,
+                                vertical: 3,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.red,
+                              ),
+                              child: Text(
+                                "${products[index]["off"]}%off",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: "pop",
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                            child: LikeButton(),
                           ),
-                        ),
-                      ],
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: Container(
+                              height: 45,
+                              width: 45,
+                              decoration: BoxDecoration(
+                                color: Color(0xff64B5F6),
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(20),
+                                  bottomLeft: Radius.circular(10),
+                                ),
+                              ),
+                              child: LikeButton(),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

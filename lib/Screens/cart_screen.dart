@@ -1,9 +1,16 @@
+import 'dart:async';
 import 'dart:ui';
 
+import 'package:ecommerce_app/widgets/pop_effect.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
   List<Map<String, dynamic>> cartItems = [
     {
       "image":
@@ -69,11 +76,8 @@ class CartScreen extends StatelessWidget {
         ),
         body: Stack(
           children: [
-            SingleChildScrollView(
-              child: Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
+            Positioned.fill(
+              child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -98,7 +102,10 @@ class CartScreen extends StatelessWidget {
                         return Container(
                           height: 120,
                           padding: EdgeInsets.symmetric(horizontal: 20),
-                          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                          margin: EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 15,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20),
@@ -119,8 +126,10 @@ class CartScreen extends StatelessWidget {
                                   SizedBox(width: 20),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         SizedBox(
                                           width: 140,
@@ -149,11 +158,19 @@ class CartScreen extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(width: 5),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 55),
-                                    child: Icon(
-                                      CupertinoIcons.delete_simple,
-                                      color: Color(0xFF1E88E5),
+                                  PopChild(
+                                    onTap: () {
+                                      cartItems.removeAt(index);
+                                      setState(() {});
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 55,
+                                      ),
+                                      child: Icon(
+                                        CupertinoIcons.delete_simple,
+                                        color: Color(0xFF1E88E5),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -222,7 +239,7 @@ class CartScreen extends StatelessWidget {
             ),
 
             Positioned(
-            bottom: 0,
+              bottom: 0,
               left: 0,
               right: 0,
               child: Container(
@@ -230,6 +247,10 @@ class CartScreen extends StatelessWidget {
                 height: 380,
                 decoration: BoxDecoration(
                   color: Color(0xffe8f5ff),
+                  boxShadow: [BoxShadow(
+                    blurRadius: 10,
+                    color: Colors.black.withAlpha(50),
+                  )],
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(40),
                     topRight: Radius.circular(40),
@@ -246,12 +267,21 @@ class CartScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         hintText: "Enter Discount Code",
-                        hintStyle: TextStyle(fontWeight: FontWeight.w500,fontFamily: "pop"),
-                        suffixText: "a",
-                        suffixIcon: Icon(
-                          Icons.add_rounded,
-                          color: Color(0xFF1E88E5),
-                          size: 30,
+                        hintStyle: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "pop",
+                        ),
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.only(top: 10,right: 15),
+                          child: Text(
+                            "Apply",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "pop",
+                              fontSize: 16,
+                              color: Color(0xFF1E88E5),
+                            ),
+                          ),
                         ),
                         //suffixStyle:  TextStyle(fontWeight: FontWeight.w500,fontFamily: "pop",color: Colors.black,fontSize: 16),
                       ),
@@ -263,7 +293,7 @@ class CartScreen extends StatelessWidget {
                         Text(
                           "Subtotal",
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: FontWeight.w500,
                             fontFamily: "pop",
                             color: Colors.grey.shade700,
@@ -273,7 +303,7 @@ class CartScreen extends StatelessWidget {
                         Text(
                           "₹52100",
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: FontWeight.w500,
                             fontFamily: "pop",
                             color: Colors.grey.shade700,
@@ -312,12 +342,12 @@ class CartScreen extends StatelessWidget {
                         SizedBox(width: 10),
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF1E88E5),
-                        minimumSize: Size(280, 50)
+                        minimumSize: Size(280, 50),
                       ),
                       child: Text(
                         "Checkout",
