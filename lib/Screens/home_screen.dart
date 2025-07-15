@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "price": "2,499",
       "mrp": "3,299",
       "off": 20,
-      "id":1,
+      "id": 1,
     },
     {
       "image":
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "price": "34,490",
       "mrp": "41,850",
       "off": "18",
-      "id" : 2,
+      "id": 2,
     },
     {
       "image":
@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "price": "23,900",
       "mrp": "23,900",
       "off": "42",
-      "id":3,
+      "id": 3,
     },
     {
       "image":
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "price": "1,599",
       "mrp": "2,199",
       "off": "17",
-      "id" :4,
+      "id": 4,
     },
     {
       "image":
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "price": "38,500",
       "mrp": "43,000",
       "off": "35",
-      "id" :5,
+      "id": 5,
     },
     {
       "image":
@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "price": "3,750",
       "mrp": "4,499",
       "off": "50",
-      "id" :6,
+      "id": 6,
     },
   ];
   int _currentBanner = 0;
@@ -94,7 +94,10 @@ class _HomeScreenState extends State<HomeScreen> {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFFe3f2fd), Color(0xFFbbdefb)],
+           colors: [Color(0xFFe3f2fd), Color(0xFFbbdefb)],
+         // colors: [Color(0xFF121212), Color(0xFF252561)],
+         //colors: [Color(0xFF0D47A1), Color(0xFF1A237E)],
+         // colors: [Color(0xFF121212),Color(0xFF0D47A1) ],
         ),
       ),
       child: Scaffold(

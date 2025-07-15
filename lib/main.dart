@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/Screens/Onboarding/ob_boarding.dart';
 import 'package:ecommerce_app/Screens/main_page.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+
       debugShowCheckedModeBanner: false,
-      home:MainPage(),
+      home:OnBoarding(),
     );
   }
 }
