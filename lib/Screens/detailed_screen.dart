@@ -100,12 +100,16 @@ class _DetailedScreenState extends State<DetailedScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
+    Color icColor = isDark ? Colors.white : Colors.black;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFFe3f2fd), Color(0xFFbbdefb)],
+          colors: isDark
+              ? [Color(0xFF121212), Color(0xFF1E1E1E)]
+              : [Color(0xFFe3f2fd), Color(0xFFbbdefb)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
       ),
       child: Scaffold(
@@ -128,7 +132,7 @@ class _DetailedScreenState extends State<DetailedScreen> {
                   width: double.infinity,
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color:Theme.of(context).cardColor,
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(32),
                     ),
@@ -329,17 +333,17 @@ class _DetailedScreenState extends State<DetailedScreen> {
                                 padding: EdgeInsets.only(left: 10),
                                 child: index == indexColor
                                     ? Container(
-                                        height: 60,
-                                        width: 60,
+                                        height: 50,
+                                        width: 50,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          border: Border.all(width: 2),
-                                          color: Colors.white,
+                                          border: Border.all(width: 2,color: isDark?Colors.white:Colors.black),
+                                          color: Theme.of(context).cardColor,
                                         ),
                                         child: Center(
                                           child: Container(
-                                            height: 50,
-                                            width: 50,
+                                            height: 40,
+                                            width: 40,
                                             decoration: BoxDecoration(
                                               color: productColor[index],
                                               shape: BoxShape.circle,
@@ -349,8 +353,8 @@ class _DetailedScreenState extends State<DetailedScreen> {
                                       )
                                     : Center(
                                         child: Container(
-                                          height: 50,
-                                          width: 50,
+                                          height: 40,
+                                          width: 40,
                                           decoration: BoxDecoration(
                                             color: productColor[index],
                                             shape: BoxShape.circle,

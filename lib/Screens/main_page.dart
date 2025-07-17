@@ -18,25 +18,17 @@ class _MainPageState extends State<MainPage> {
       ProfileScreen(),
     ];
   }
-
 int page =0;
 
   final PersistentTabController _controller = PersistentTabController(
     initialIndex: 0,
   );
 
-  List<PersistentBottomNavBarItem> _navBarsItems() {
+  List<PersistentBottomNavBarItem> _navBarsItems(bool isDark) {
     return [
       PersistentBottomNavBarItem(
         icon: Icon(
           CupertinoIcons.home,
-          /*shadows: [
-            Shadow(
-              blurRadius: 4,
-              color: Colors.black.withAlpha(77),
-              offset: Offset(0, 1),
-            ),
-          ],*/
         ),
         activeColorSecondary: Colors.white,
         title: ("Home"),
@@ -47,13 +39,6 @@ int page =0;
       PersistentBottomNavBarItem(
         icon: Icon(
           CupertinoIcons.cart,
-          /*shadows: [
-            Shadow(
-              blurRadius: 4,
-              color: Colors.black.withAlpha(77),
-              offset: Offset(0, 1),
-            ),
-          ],*/
         ),
         title: ("Cart"),
         textStyle: TextStyle(fontWeight: FontWeight.w600,fontFamily:"pop",),
@@ -64,13 +49,6 @@ int page =0;
       PersistentBottomNavBarItem(
         icon: Icon(
           CupertinoIcons.profile_circled,
-         /* shadows: [
-            Shadow(
-              blurRadius: 4,
-              color: Colors.black.withAlpha(90),
-              offset: Offset(0, 1),
-            ),
-          ],*/
         ),
         title: ("Profile"),
         textStyle: TextStyle(fontWeight: FontWeight.w600,fontFamily:"pop",),
@@ -83,12 +61,13 @@ int page =0;
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     // TODO: implement build
     return PersistentTabView(
       context,
       controller: _controller,
       screens: _buildScreens(),
-      items: _navBarsItems(),
+      items: _navBarsItems(isDark),
 onItemSelected: (index){
         page =index;
         print("the index is$index");
@@ -110,7 +89,7 @@ onItemSelected: (index){
       stateManagement: true,
       // Default is true.
       hideNavigationBarWhenKeyboardAppears: true,
-      backgroundColor:page ==0? Colors.transparent:Colors.white,
+      backgroundColor:page ==0? Colors.transparent:isDark?Color(0xff1E1E1E): Colors.white,
       isVisible: true,
       animationSettings: const NavBarAnimationSettings(
         navBarItemAnimation: ItemAnimationSettings(

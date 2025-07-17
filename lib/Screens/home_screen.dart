@@ -88,16 +88,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
+    TextTheme style = Theme.of(context).textTheme;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-           colors: [Color(0xFFe3f2fd), Color(0xFFbbdefb)],
-         // colors: [Color(0xFF121212), Color(0xFF252561)],
-         //colors: [Color(0xFF0D47A1), Color(0xFF1A237E)],
-         // colors: [Color(0xFF121212),Color(0xFF0D47A1) ],
+
+          colors: isDark
+              ? [Color(0xFF121212), Color(0xFF1E1E1E)]
+              : [Color(0xFFe3f2fd), Color(0xFFbbdefb)],
+          // colors: [Color(0xFF121212), Color(0xFF252561)],
+          //colors: [Color(0xFF0D47A1), Color(0xFF1A237E)],
+          // colors: [Color(0xFF121212),Color(0xFF0D47A1) ],
         ),
       ),
       child: Scaffold(
@@ -117,42 +121,50 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: EdgeInsets.only(left: 20, top: 16),
                 child: Text(
                   "Hello,Athishay👋",
-                  style: TextStyle(
-                    fontSize: 31,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: "pop",
-                    color: Color(0xff212121),
-                  ),
+                  style: style.headlineLarge
                 ),
               ),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 decoration: BoxDecoration(
-                  boxShadow: [
+                  borderRadius: BorderRadius.circular(20),
+                  border: isDark
+                      ? Border.all(color: Color(0xFF404040), width: 1)
+                      : null,
+                  boxShadow: isDark
+                  ? [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.5),
+                    blurRadius: 20,
+                    spreadRadius: 2,
+                    offset: Offset(0, 8),
+                  ),
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Color(0xaa3A3A3A),
+                      blurRadius: 15,
+                      spreadRadius: -5,
+                      offset: Offset(0, -8),
+                    ),
+                    ]:[
+                    BoxShadow(
+                      color: isDark ?Color(0xff424242):Colors.black.withOpacity(0.05),
                       blurRadius: 10,
                       offset: Offset(0, 4),
                     ),
                   ],
                 ),
                 child: TextField(
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: "pop",
-                    color: Color(0xff757575),
-                  ),
+                  style: style.bodySmall!.copyWith(fontSize: 18,fontWeight: FontWeight.w500),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white.withAlpha(140),
+                    fillColor: isDark?Color(0xff1E1E1E):Colors.white.withAlpha(140),
                     prefixIcon: Icon(
                       CupertinoIcons.search,
-                      color: Color(0xff757575),
+                      color: isDark?Color(0xff78909C):Color(0xff757575),
                     ),
                     suffixIcon: Icon(
                       CupertinoIcons.camera_viewfinder,
-                      color: Color(0xff757575),
+                      color: isDark?Color(0xff78909C):Color(0xff757575),
                       size: 30,
                     ),
                     border: OutlineInputBorder(
@@ -161,12 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     contentPadding: EdgeInsets.symmetric(vertical: 15),
                     hintText: "Search",
-                    hintStyle: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: "pop",
-                      color: Color(0xff616161),
-                    ),
+                    hintStyle: style.bodySmall!.copyWith(fontSize: 18,fontWeight: FontWeight.w500),
                   ),
                 ),
               ),
@@ -179,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
+                          color: isDark?Color(0xff424242):Colors.black.withOpacity(0.1),
                           blurRadius: 10,
                           offset: Offset(0, 4),
                         ),
@@ -220,8 +227,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
                         color: _currentBanner == entry.key
-                            ? Colors.white
-                            : Colors.white.withOpacity(0.5),
+                            ? isDark?Colors.black: Colors.white
+                            : isDark?Colors.black.withOpacity(0.5):Colors.white.withOpacity(0.5),
                       ),
                     ),
                   );
@@ -235,12 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.only(left: 20),
                     child: Text(
                       "Categories",
-                      style: TextStyle(
-                        color: Color(0xff212121),
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: "pop",
-                      ),
+                      style: style.headlineMedium
                     ),
                   ),
                   Spacer(),
@@ -277,6 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           PopChild(
                             child: CircleAvatar(
                               radius: 40,
+                              backgroundColor: isDark?Color(0xff2C2C2C):Colors.white,
                               backgroundImage: AssetImage(
                                 categoriesItems[index]["image"],
                               ),
@@ -287,11 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: 80,
                             child: Text(
                               categoriesItems[index]['name'],
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: "pop",
-                                fontWeight: FontWeight.w500,
-                              ),
+                              style: style.bodyLarge,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.center,
@@ -310,12 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.only(left: 20),
                     child: Text(
                       "For you",
-                      style: TextStyle(
-                        color: Color(0xff212121),
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: "pop",
-                      ),
+                      style:style.headlineMedium,
                     ),
                   ),
                   Spacer(),
@@ -367,8 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        //color: Color(0xffF5F5F5),
-                        color: Colors.white,
+                        color:isDark?Color(0xff2C2C2C): Colors.white,
                       ),
                       child: Stack(
                         children: [
@@ -397,45 +390,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                     products[index]["Name"],
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: "pop",
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                    style: style.bodyMedium!.copyWith(fontWeight: FontWeight.w500)
                                   ),
                                 ),
                                 SizedBox(height: 5),
                                 Text(
                                   "₹${products[index]["price"]}",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: "pop",
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                                  style: style.titleLarge!.copyWith(fontSize: 18)
                                 ),
                                 Row(
                                   children: [
                                     Text(
                                       "M.R.P:",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: "pop",
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w400,
-                                      ),
+                                      style: style.bodySmall
                                     ),
                                     Text(
                                       "₹${products[index]["mrp"]}",
 
-                                      style: TextStyle(
-                                        decoration: TextDecoration.lineThrough,
-                                        fontSize: 14,
-                                        fontFamily: "pop",
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w400,
-                                      ),
+                                      style: style.bodySmall
                                     ),
                                   ],
                                 ),

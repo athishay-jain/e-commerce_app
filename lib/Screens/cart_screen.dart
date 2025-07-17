@@ -58,13 +58,16 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
+    TextTheme style = Theme.of(context).textTheme;
     // TODO: implement build
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFFe3f2fd), Color(0xFFbbdefb)],
+          colors:isDark
+            ? [Color(0xFF121212), Color(0xFF1E1E1E)]:[Color(0xFFe3f2fd), Color(0xFFbbdefb)],
         ),
       ),
       child: Scaffold(
@@ -85,11 +88,7 @@ class _CartScreenState extends State<CartScreen> {
                       padding: const EdgeInsets.only(left: 20, top: 20),
                       child: Text(
                         "My Cart",
-                        style: TextStyle(
-                          fontFamily: "pop",
-                          fontWeight: FontWeight.w600,
-                          fontSize: 30,
-                        ),
+                        style:style.headlineLarge
                       ),
                     ),
                     SizedBox(height: 10),
@@ -107,7 +106,7 @@ class _CartScreenState extends State<CartScreen> {
                             horizontal: 15,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color:Theme.of(context).cardColor,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Stack(
@@ -117,7 +116,6 @@ class _CartScreenState extends State<CartScreen> {
                                   Container(
                                     height: 80,
                                     width: 80,
-                                    color: Colors.white,
                                     child: Image.network(
                                       cartItems[index]["image"],
                                       fit: BoxFit.cover,
@@ -135,11 +133,7 @@ class _CartScreenState extends State<CartScreen> {
                                           width: 140,
                                           child: Text(
                                             cartItems[index]["Name"],
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                              fontFamily: "pop",
-                                            ),
+                                            style: style.titleMedium!.copyWith(fontSize: 16),
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                           ),
@@ -147,12 +141,7 @@ class _CartScreenState extends State<CartScreen> {
                                         SizedBox(height: 5),
                                         Text(
                                           "₹${cartItems[index]["price"]}",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 16,
-                                            fontFamily: "pop",
-                                            color: Colors.black54,
-                                          ),
+                                          style:style.titleLarge!.copyWith(fontSize: 18)
                                         ),
                                       ],
                                     ),
@@ -185,19 +174,19 @@ class _CartScreenState extends State<CartScreen> {
                                         height: 30,
                                         width: 30,
                                         decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: isDark?Colors.white:Colors.grey.shade200,
                                           borderRadius: BorderRadius.only(
                                             topLeft: Radius.circular(20),
                                             bottomLeft: Radius.circular(20),
                                           ),
                                         ),
-                                        child: Icon(Icons.add_rounded),
+                                        child: Icon(Icons.add_rounded,color: isDark?Colors.black:Colors.white,),
                                       ),
                                     ),
                                     Container(
                                       height: 30,
                                       width: 30,
-                                      color: Colors.grey.shade200,
+                                      color: isDark?Colors.white:Colors.grey.shade200,
                                       child: Center(
                                         child: Text(
                                           cartItems[index]["qty"].toString(),
@@ -205,6 +194,7 @@ class _CartScreenState extends State<CartScreen> {
                                             fontFamily: "pop",
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500,
+                                            color: isDark?Colors.black:Colors.black,
                                           ),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
@@ -216,13 +206,13 @@ class _CartScreenState extends State<CartScreen> {
                                         height: 30,
                                         width: 30,
                                         decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: isDark?Colors.white:Colors.grey.shade200,
                                           borderRadius: BorderRadius.only(
                                             topRight: Radius.circular(20),
                                             bottomRight: Radius.circular(20),
                                           ),
                                         ),
-                                        child: Icon(Icons.remove_rounded),
+                                        child: Icon(Icons.remove_rounded,color:isDark?Colors.black:Colors.white),
                                       ),
                                     ),
                                   ],
@@ -246,8 +236,13 @@ class _CartScreenState extends State<CartScreen> {
                 padding: EdgeInsets.only(top: 20, right: 20, left: 20),
                 height: 380,
                 decoration: BoxDecoration(
-                  color: Color(0xffe8f5ff),
-                  boxShadow: [BoxShadow(
+                  color: isDark?Color(0xff2C2C2C): Color(0xffe8f5ff),
+                  boxShadow: isDark?[BoxShadow(
+                    color: Color(0xaa3A3A3A),
+                    blurRadius: 15,
+                    spreadRadius: -5,
+                    offset: Offset(0, -8),
+                  )]:[BoxShadow(
                     blurRadius: 10,
                     color: Colors.black.withAlpha(50),
                   )],
@@ -261,7 +256,7 @@ class _CartScreenState extends State<CartScreen> {
                     TextField(
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: isDark?Color(0xFF121212):Colors.white,
                         border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(20),
@@ -296,7 +291,7 @@ class _CartScreenState extends State<CartScreen> {
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
                             fontFamily: "pop",
-                            color: Colors.grey.shade700,
+                            color: isDark? Color(0xff90A4AE):Colors.grey.shade700,
                           ),
                         ),
                         Spacer(),
@@ -306,7 +301,7 @@ class _CartScreenState extends State<CartScreen> {
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
                             fontFamily: "pop",
-                            color: Colors.grey.shade700,
+                            color: isDark? Color(0xff90A4AE):Colors.grey.shade700,
                           ),
                           textAlign: TextAlign.end,
                         ),
@@ -325,7 +320,7 @@ class _CartScreenState extends State<CartScreen> {
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                             fontFamily: "pop",
-                            color: Colors.black,
+                            color: isDark?Colors.white:Colors.black,
                           ),
                         ),
                         Spacer(),
