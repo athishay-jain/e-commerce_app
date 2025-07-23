@@ -5,12 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
-class MainPage extends StatefulWidget{
+class DashboardScreen extends StatefulWidget{
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _DashboardScreenState extends State<DashboardScreen> {
   List<Widget> _buildScreens() {
     return [
       HomeScreen(),

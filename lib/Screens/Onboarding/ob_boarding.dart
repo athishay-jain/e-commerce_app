@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_app/Screens/Authentication/login_screen.dart';
 import 'package:ecommerce_app/Screens/home_screen.dart';
-import 'package:ecommerce_app/Screens/main_page.dart';
+import 'package:ecommerce_app/Screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 
 class OnBoarding extends StatefulWidget {

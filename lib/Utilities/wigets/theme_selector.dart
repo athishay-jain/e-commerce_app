@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/Utilities/theme_provider.dart';
+import 'package:ecommerce_app/Utilities/Theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
