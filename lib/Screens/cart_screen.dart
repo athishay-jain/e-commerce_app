@@ -5,10 +5,12 @@ import 'package:ecommerce_app/Data/Bloc/Cart/cart_bloc.dart';
 import 'package:ecommerce_app/Data/Bloc/Cart/cart_event.dart';
 import 'package:ecommerce_app/Data/Bloc/Cart/cart_state.dart';
 import 'package:ecommerce_app/Data/Model/Product/cart_model.dart';
+import 'package:ecommerce_app/Screens/check_out.dart';
 import 'package:ecommerce_app/widgets/pop_effect.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CartScreen extends StatefulWidget {
@@ -17,6 +19,8 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -407,12 +411,41 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                           SizedBox(height: 20),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.read<CartBloc>().add(
+                                PlaceOrder(cart_id: state.cart[0].id),
+                              );
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: CheckOut(),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xFF1E88E5),
                               minimumSize: Size(280, 50),
                             ),
-                            child: Text(
+                            child: isLoading
+                                ? Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment:
+                              MainAxisAlignment.center,
+                              children: [
+                                CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  "Checkout",
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontFamily: "pop",
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            )
+                                : Text(
                               "Checkout",
                               style: TextStyle(
                                 fontSize: 22,
@@ -422,6 +455,63 @@ class _CartScreenState extends State<CartScreen> {
                               ),
                             ),
                           ),
+                          /*BlocListener<CartBloc,CartState>(
+                            listener: (context, state) {
+                              if (state is OrderLoadingState) {
+                                isLoading = true;
+                                setState(() {});
+                              }
+                              if (state is OrderLoadedState) {
+                                isLoading = false;
+                                setState(() {});
+                                PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen: CheckOut(),
+                                );
+                              }
+                            },
+                            child: ElevatedButton(
+                              onPressed: () {
+                                context.read<CartBloc>().add(
+                                  PlaceOrder(cart_id: state.cart[1].id),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xFF1E88E5),
+                                minimumSize: Size(280, 50),
+                              ),
+                              child: isLoading
+                                  ? Row(
+                                mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        CircularProgressIndicator(
+                                          color: Colors.white,
+                                        ),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          "Checkout",
+                                          style: TextStyle(
+                                            fontSize: 22,
+                                            fontFamily: "pop",
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Text(
+                                      "Checkout",
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontFamily: "pop",
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                            ),
+                          ),*/
                         ],
                       );
                     }

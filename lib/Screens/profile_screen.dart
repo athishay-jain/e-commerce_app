@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce_app/Screens/Profile_screens/Order_history.dart';
 import 'package:ecommerce_app/Screens/Profile_screens/app_settings.dart';
+import 'package:ecommerce_app/Utilities/Data/app_routes.dart';
 import 'package:ecommerce_app/widgets/pop_effect.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
@@ -82,7 +84,7 @@ class ProfileScreen extends StatelessWidget {
                             height: 18,
                             width: 18,
                           ),
-                          SizedBox(width: 5,),
+                          SizedBox(width: 5),
                           Text("255 Points", style: theme.bodySmall),
                         ],
                       ),
@@ -113,7 +115,14 @@ class ProfileScreen extends StatelessWidget {
               img: "assets/images/icons/order_ic.png",
               theme: theme,
               icColor: icColor,
-              onTap: () {},
+              onTap: () {
+                PersistentNavBarNavigator.pushNewScreen(
+                  context,
+                  screen: OrderHistory(),
+                  withNavBar: false,
+                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                );
+              },
             ),
             _lists(
               title: "Payment",

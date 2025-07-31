@@ -1,8 +1,10 @@
 import 'package:ecommerce_app/Data/Bloc/Categories/Categories_bloc.dart';
 import 'package:ecommerce_app/Data/Bloc/Category_products/category_products_bloc.dart';
+import 'package:ecommerce_app/Data/Bloc/Order/order_bloc.dart';
 import 'package:ecommerce_app/Data/Bloc/Product/product_bloc.dart';
 import 'package:ecommerce_app/Data/Bloc/User/user_bloc.dart';
 import 'package:ecommerce_app/Data/Helper/api_helper.dart';
+import 'package:ecommerce_app/Data/Repository/Order_repo.dart';
 import 'package:ecommerce_app/Data/Repository/cart_repo.dart';
 import 'package:ecommerce_app/Data/Repository/categories_repo.dart';
 import 'package:ecommerce_app/Data/Repository/products_repository.dart';
@@ -20,13 +22,22 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) =>
-            CartBloc(
-              cartRepo: CartRepo(apiHelper: ApiHelper(),),),), BlocProvider(create: (context) =>
-            CategoryProductBloc(
-              repo: CategoriesRepo(apiHelper: ApiHelper(),),),),
-        BlocProvider(create: (context) =>
-            CategoriesBloc(repo: CategoriesRepo(apiHelper: ApiHelper(),),),),
+        BlocProvider(
+          create: (context) =>
+              OrderBloc(orderRepo: OrderRepo(apiHelper: ApiHelper())),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CartBloc(cartRepo: CartRepo(apiHelper: ApiHelper())),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CategoryProductBloc(repo: CategoriesRepo(apiHelper: ApiHelper())),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CategoriesBloc(repo: CategoriesRepo(apiHelper: ApiHelper())),
+        ),
         BlocProvider(
           create: (context) =>
               ProductBloc(repo: ProductRepo(apiHelper: ApiHelper())),

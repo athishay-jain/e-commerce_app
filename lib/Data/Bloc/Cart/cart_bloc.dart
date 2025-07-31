@@ -129,6 +129,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         emit(FailureState(errorMessage: e.toString()));
       }
     });
+    on<PlaceOrder>((event,emit)async{
+      emit(OrderLoadingState());
+      try{
+        dynamic res = await cartRepo.placeOrder(cart_id: event.cart_id);
+        emit(OrderLoadedState(message: res["message"], success: res["status"]));
+      }catch(e){
+        emit(FailureState(errorMessage: e.toString()));
+      }
+    });
   }
 
   int findTotalAmount({required List<CartModel> cart}) {

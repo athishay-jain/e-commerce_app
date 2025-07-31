@@ -22,3 +22,7 @@ class DecrementQty extends CartEvent{
   int quantity;
   DecrementQty({required this.quantity,required this.product_id});
 }
+class PlaceOrder extends CartEvent{
+  int cart_id;
+  PlaceOrder({required this.cart_id});
+}

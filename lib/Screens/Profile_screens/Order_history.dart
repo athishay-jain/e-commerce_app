@@ -1,4 +1,7 @@
+import 'package:ecommerce_app/Data/Bloc/Order/order_bloc.dart';
+import 'package:ecommerce_app/Data/Bloc/Order/order_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OrderHistory extends StatelessWidget {
   const OrderHistory({super.key});
@@ -25,6 +28,21 @@ class OrderHistory extends StatelessWidget {
               leading: Image.asset("assets/images/app_icon_horizonal.png"),
               leadingWidth: 180,
             ),
-            body:Column(),),);
+            body:Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 16,top: 16),
+                  child: Text("Order History",style: style.headlineMedium,),
+                ),
+                SizedBox(height: 10,),
+                BlocBuilder<OrderBloc,OrderState>(builder: (context, state) {
+                  if(state is LoadingState){}
+                  if(state is LoadedState){}
+                  if(state is FailureState){}
+                  return Container();
+                  },)
+              ],
+            ),),);
   }
 }

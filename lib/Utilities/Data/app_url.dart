@@ -8,6 +8,7 @@ class AppUrls {
   static const String getCart = "$baseUrl/ecommerce-api/product/view-cart";
   static const String deleteItem = "$baseUrl/ecommerce-api/product/delete-cart";
   static const String decrement = "$baseUrl/ecommerce-api/product/decrement-quantity";
-  static const String getOrder = "$baseUrl//ecommerce-api/product/get-order";
+  static const String placeOrder = "$baseUrl/ecommerce-api/product/create-order";
+  static const String getOrder = "$baseUrl/ecommerce-api/product/get-order";
 
 }

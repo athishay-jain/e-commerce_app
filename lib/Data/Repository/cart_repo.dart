@@ -37,7 +37,7 @@ class CartRepo {
   }
   Future<dynamic>placeOrder({required int cart_id})async{
     try{
-      return await apiHelper.postApi(url: AppUrls.getOrder,body: {
+      return await apiHelper.postApi(url: AppUrls.placeOrder,body: {
         "cart_id":cart_id
       });
     }catch(e){rethrow;}

@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/Screens/Authentication/login_screen.dart';
 import 'package:ecommerce_app/Screens/Authentication/signup_screen.dart';
 import 'package:ecommerce_app/Screens/Categories_screen/category_products.dart';
+import 'package:ecommerce_app/Screens/Profile_screens/Order_history.dart';
 import 'package:ecommerce_app/Screens/Profile_screens/app_settings.dart';
 import 'package:ecommerce_app/Screens/cart_screen.dart';
 import 'package:ecommerce_app/Screens/dashboard_screen.dart';
@@ -21,6 +22,7 @@ class AppRoutes {
   static const String profileScreen = "/profile";
   static const String appSettingScreen = "/appSetting";
   static const String categoryProductScreen = "/CategoryProductScreen";
+  static const String oderHistoryScreen = "/oderHistoryScreen";
 
   Map<String, WidgetBuilder> routes = {
     splashScreen: (_) => SplashScreen(),
@@ -33,5 +35,6 @@ class AppRoutes {
     profileScreen: (_) => ProfileScreen(),
     appSettingScreen: (_) => AppSettings(),
     categoryProductScreen:(_)=>CategoryProducts(),
+    oderHistoryScreen:(_)=>OrderHistory(),
   };
 }
