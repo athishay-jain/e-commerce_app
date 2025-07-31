@@ -12,3 +12,13 @@ class DeleteItem extends CartEvent{
   int cart_id;
   DeleteItem({required this.cart_id});
 }
+class IncrementQty extends CartEvent{
+  int product_id;
+  int quantity;
+  IncrementQty({required this.product_id,required this.quantity});
+}
+class DecrementQty extends CartEvent{
+  int product_id;
+  int quantity;
+  DecrementQty({required this.quantity,required this.product_id});
+}

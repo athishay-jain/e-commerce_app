@@ -9,6 +9,7 @@ import 'package:ecommerce_app/widgets/pop_effect.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -18,7 +19,6 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
-   
     super.initState();
     context.read<CartBloc>().add(GetCart());
   }
@@ -60,9 +60,28 @@ class _CartScreenState extends State<CartScreen> {
                     BlocBuilder<CartBloc, CartState>(
                       builder: (context, state) {
                         if (state is LoadingState) {
-                          return Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.blueAccent,
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: 3,
+                            itemBuilder: (context, index) => Shimmer.fromColors(
+                              child: Container(
+                                height: 120,
+                                margin: EdgeInsets.symmetric(
+                                  vertical: 10,
+                                  horizontal: 15,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              baseColor: isDark
+                                  ? Colors.grey[800]!
+                                  : Colors.grey[300]!,
+                              highlightColor: isDark
+                                  ? Colors.grey[700]!
+                                  : Colors.grey[100]!,
                             ),
                           );
                         }
@@ -155,6 +174,16 @@ class _CartScreenState extends State<CartScreen> {
                                       child: Row(
                                         children: [
                                           InkWell(
+                                            onTap: () {
+                                              print("decriment called");
+                                              context.read<CartBloc>().add(
+                                                DecrementQty(
+                                                  quantity: 1,
+                                                  product_id: cartItems[index]
+                                                      .product_id,
+                                                ),
+                                              );
+                                            },
                                             child: Container(
                                               height: 30,
                                               width: 30,
@@ -203,7 +232,7 @@ class _CartScreenState extends State<CartScreen> {
                                           InkWell(
                                             onTap: () {
                                               context.read<CartBloc>().add(
-                                                AddToCart(
+                                                IncrementQty(
                                                   quantity: 1,
                                                   product_id: cartItems[index]
                                                       .product_id,
@@ -375,6 +404,81 @@ class _CartScreenState extends State<CartScreen> {
                               ),
                               SizedBox(width: 10),
                             ],
+                          ),
+                          SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF1E88E5),
+                              minimumSize: Size(280, 50),
+                            ),
+                            child: Text(
+                              "Checkout",
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontFamily: "pop",
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                    if (state is LoadingState) {
+                      return Column(
+                        children: [
+                          Shimmer.fromColors(
+                            baseColor: isDark
+                                ? Colors.grey[800]!
+                                : Colors.grey[300]!,
+                            highlightColor: isDark
+                                ? Colors.grey[700]!
+                                : Colors.grey[100]!,
+                            child: Container(
+                              height: 80,
+                              margin: EdgeInsets.symmetric(horizontal: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Shimmer.fromColors(
+                            baseColor: isDark
+                                ? Colors.grey[800]!
+                                : Colors.grey[300]!,
+                            highlightColor: isDark
+                                ? Colors.grey[700]!
+                                : Colors.grey[100]!,
+                            child: Container(
+                              height: 30,
+                              margin: EdgeInsets.symmetric(horizontal: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Container(height: 1, color: Colors.grey),
+                          SizedBox(height: 10),
+                          Shimmer.fromColors(
+                            baseColor: isDark
+                                ? Colors.grey[800]!
+                                : Colors.grey[300]!,
+                            highlightColor: isDark
+                                ? Colors.grey[700]!
+                                : Colors.grey[100]!,
+                            child: Container(
+                              height: 30,
+                              margin: EdgeInsets.symmetric(horizontal: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                           SizedBox(height: 20),
                           ElevatedButton(

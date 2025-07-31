@@ -10,7 +10,8 @@ class SuccessState extends CartState{
 class LoadedState extends CartState{
   List<CartModel>cart;
   int totalAmount;
-  LoadedState({required this.cart,required this.totalAmount});
+  String message;
+  LoadedState({required this.cart,required this.totalAmount,required this.message});
 }
 class FailureState extends CartState{
   String errorMessage;

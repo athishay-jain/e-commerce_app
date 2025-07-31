@@ -26,4 +26,21 @@ class CartRepo {
       });
     }catch(e){rethrow;}
   }
+  Future<dynamic>decrementItem({required int product_id,required int qty})async{
+    try{
+      print("the Url for the decrement_quantity is${AppUrls.decrement}");
+      return await apiHelper.postApi(url: AppUrls.decrement,body: {
+        "product_id":product_id,
+        "quantity":qty,
+      });
+    }catch(e){rethrow;}
+  }
+  Future<dynamic>placeOrder({required int cart_id})async{
+    try{
+      return await apiHelper.postApi(url: AppUrls.getOrder,body: {
+        "cart_id":cart_id
+      });
+    }catch(e){rethrow;}
+  }
+
 }

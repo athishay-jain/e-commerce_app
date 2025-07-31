@@ -544,7 +544,7 @@ class _DetailedScreenState extends State<DetailedScreen> {
                         SnackBar(
                           backgroundColor: Colors.green,
                           content: Text(
-                            "Cart Added",
+                            state.message,
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
