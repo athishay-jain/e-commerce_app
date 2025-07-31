@@ -7,7 +7,7 @@ class AppExceptions {
   @override
   String toString() {
     // TODO: implement toString
-    return "Exception :$title ,Message:$message";
+    return "$title :$message";
   }
 }
 

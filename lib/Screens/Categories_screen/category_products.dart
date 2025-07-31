@@ -2,10 +2,13 @@ import 'package:ecommerce_app/Data/Bloc/Category_products/category_products_stat
 import 'package:ecommerce_app/Data/Model/Product/category_product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../Data/Bloc/Category_products/category_products_bloc.dart';
+import '../../Data/Model/Product/product_model.dart';
 import '../../widgets/like_button_widget.dart';
 import '../../widgets/pop_effect.dart';
+import '../detailed_screen.dart';
 
 class CategoryProducts extends StatefulWidget {
   @override
@@ -81,7 +84,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                     );
                   }
                   if (state is LoadedState) {
-                    List<CategoryProductModel> productModel = state.products;
+                    List<ProductModel> productModel = state.products;
                     return GridView.builder(
                       padding: EdgeInsets.only(
                         top: 10,
@@ -99,14 +102,14 @@ class _CategoryProductsState extends State<CategoryProducts> {
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: productModel.length,
                       itemBuilder: (_, index) {
-                        CategoryProductModel product = productModel[index];
+                        ProductModel product = productModel[index];
                         return PopChild(
                           onTap: () {
-                           /* PersistentNavBarNavigator.pushNewScreen(
+                            PersistentNavBarNavigator.pushNewScreen(
                               context,
-                              screen: DetailedScreen(product: productModel[index]),
+                              screen: DetailedScreen(product:product ),
                               withNavBar: false,
-                            );*/
+                            );
                           },
                           child: Container(
                             decoration: BoxDecoration(

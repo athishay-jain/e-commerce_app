@@ -18,6 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void prefId() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     id = preferences.getString(AppConstants.userToken) ?? "";
+    print("User token is :${preferences.getString(AppConstants.userToken)}");
   }
 
   @override
@@ -29,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Duration(milliseconds: 100),
       () => Navigator.pushNamed(
         context,
-        id.isEmpty ? AppRoutes.loginScreen : AppRoutes.dashBoardScreen,
+        id.isNotEmpty ? AppRoutes.loginScreen : AppRoutes.dashBoardScreen,
       ),
     );
   }

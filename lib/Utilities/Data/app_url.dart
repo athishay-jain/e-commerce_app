@@ -4,4 +4,7 @@ class AppUrls {
   static const String signUp = "$baseUrl/ecommerce-api/user/registration";
   static const String getProduct = "$baseUrl/ecommerce-api/products";
   static const String getCategories = "$baseUrl/ecommerce-api/categories";
+  static const String addToCart = "$baseUrl/ecommerce-api/add-to-cart";
+  static const String getCart = "$baseUrl/ecommerce-api/product/view-cart";
+  static const String deleteItem = "$baseUrl/ecommerce-api/product/delete-cart";
 }

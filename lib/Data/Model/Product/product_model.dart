@@ -1,10 +1,10 @@
 class ProductModel {
-  String id;
+  int id;
   String name;
   String price;
   String image;
-  String category_id;
-  String status;
+  dynamic category_id;
+  dynamic status;
   String created_at;
   String updated_at;
 
@@ -21,7 +21,7 @@ class ProductModel {
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
-      id: json['id'],
+      id: json['id'] is String?int.parse(json['id']):json['id'],
       name: json['name'],
       price: json['price'],
       image: json['image'],

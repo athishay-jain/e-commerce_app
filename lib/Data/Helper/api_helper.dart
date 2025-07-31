@@ -53,19 +53,20 @@ class ApiHelper {
   }
 
   dynamic handelResponse(http.Response res) {
+    final decodedBody = jsonDecode(res.body);
     switch (res.statusCode) {
       case 200:
-        return jsonDecode(res.body);
+        return decodedBody ;
       case 400:
-        throw (InvalidInputException(message: "Bad Request"));
+        throw (InvalidInputException(message: decodedBody['error'] ??"Bad Request"));
       case 401:
-        throw (UnauthorizedException(message: "Unauthorized Access"));
+        throw (UnauthorizedException(message:decodedBody['error'] ?? "Unauthorized Access"));
       case 404:
-        throw (NetworkException(message: "Not Connected"));
+        throw (ServerException(message: decodedBody['error'] ??"Route not found"));
       case 500:
-        throw (ServerException(message: "Internal Server Error"));
+        throw (ServerException(message: decodedBody['error'] ??"Internal Server Error"));
       default:
-        throw (ServerException(message: "Unknown Error:${res.statusCode}"));
+        throw (ServerException(message:decodedBody['error'] ?? "Unknown Error:${res.statusCode}"));
     }
   }
 }

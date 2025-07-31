@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/Data/Model/Product/product_model.dart';
+
 class CategoryProductModel {
   int id;
   String name;
@@ -36,7 +38,7 @@ class CategoryProductModel {
 class CategoryProductDataModel {
   bool status;
   String message;
-  List<CategoryProductModel> data;
+  List<ProductModel> data;
 
   CategoryProductDataModel({
     required this.status,
@@ -45,10 +47,10 @@ class CategoryProductDataModel {
   });
 
   factory CategoryProductDataModel.fromJson(Map<String, dynamic> json) {
-    List<CategoryProductModel> data = [];
+    List<ProductModel> data = [];
     if(json["data"]!=null){
       for (Map<String, dynamic> eachJson in json["data"]) {
-        data.add(CategoryProductModel.fromJson(eachJson));
+        data.add(ProductModel.fromJson(eachJson));
       }
     }
     return CategoryProductDataModel(

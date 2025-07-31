@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce_app/Data/Bloc/Cart/cart_bloc.dart';
+import 'package:ecommerce_app/Data/Bloc/Cart/cart_event.dart';
 import 'package:ecommerce_app/Data/Bloc/Categories/Categories_bloc.dart';
 import 'package:ecommerce_app/Data/Bloc/Categories/Categories_event.dart';
 import 'package:ecommerce_app/Data/Bloc/Categories/Categories_state.dart';
@@ -105,8 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     context.read<ProductBloc>().add(LoadInitialProducts());
-    context.read<CategoriesBloc>().add(LoadCategoriesEvent());
-  }
+    context.read<CategoriesBloc>().add(LoadCategoriesEvent());}
 
   @override
   Widget build(BuildContext context) {
@@ -340,7 +341,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                   if(state is LoadedState){
                     List<CategoriesModel> catData = state.categories;
-                    print(catData.length.toString());
                     return  SizedBox(
                       height: 160,
                       child: ListView.builder(
@@ -477,7 +477,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             PersistentNavBarNavigator.pushNewScreen(
                               context,
-                              screen: DetailedScreen(product: products[index]),
+                              screen: DetailedScreen(product: productModel[index]),
                               withNavBar: false,
                             );
                           },
@@ -588,7 +588,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   }
                   if (state is ProductsFailureState) {
-                    print("failure state is called");
                     return Center(
                       child: Text(
                         state.errorMessage,
