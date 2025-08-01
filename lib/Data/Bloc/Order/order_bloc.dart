@@ -8,10 +8,18 @@ class OrderBloc extends Bloc<OrderEvent,OrderState>{
   OrderRepo orderRepo;
   OrderBloc({required this.orderRepo}):super(InitialState()){
     on<GetOrderHistory>((event,emit)async{
+      final startTime = DateTime.now();
       emit(LoadingState());
       try{
         OrderResponseDataModel response=await orderRepo.getOrder();
         if(response.status){
+          final duration = DateTime.now().difference(startTime);
+          final minimum = Duration(milliseconds: 500);
+
+
+          if (duration < minimum) {
+            await Future.delayed(minimum - duration);
+          }
           emit(LoadedState(orderData: response.orders));
         }else{
           emit(FailureState(errorMessage: response.message));
