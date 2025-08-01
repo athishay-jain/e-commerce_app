@@ -13,12 +13,19 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  String id = "";
+  String id='' ;
 
   void prefId() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     id = preferences.getString(AppConstants.userToken) ?? "";
     print("User token is :${preferences.getString(AppConstants.userToken)}");
+    Timer(
+      Duration(milliseconds: 100),
+          () => Navigator.pushNamed(
+        context,
+        id.isEmpty ? AppRoutes.loginScreen : AppRoutes.dashBoardScreen,
+      ),
+    );
   }
 
   @override
@@ -26,13 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     prefId();
-    Timer(
-      Duration(milliseconds: 100),
-      () => Navigator.pushNamed(
-        context,
-        id.isNotEmpty ? AppRoutes.loginScreen : AppRoutes.dashBoardScreen,
-      ),
-    );
+
   }
 
   @override

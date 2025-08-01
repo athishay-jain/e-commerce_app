@@ -2,9 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/Data/Bloc/User/user_bloc.dart';
 import 'package:ecommerce_app/Data/Bloc/User/user_event.dart';
 import 'package:ecommerce_app/Data/Bloc/User/user_state.dart';
+import 'package:ecommerce_app/Screens/Authentication/login_screen.dart';
 import 'package:ecommerce_app/Screens/Profile_screens/Order_history.dart';
 import 'package:ecommerce_app/Screens/Profile_screens/app_settings.dart';
 import 'package:ecommerce_app/Utilities/Data/app_constants.dart';
+import 'package:ecommerce_app/Utilities/Data/app_routes.dart';
+import 'package:ecommerce_app/Utilities/wigets/error_widget.dart';
 import 'package:ecommerce_app/widgets/pop_effect.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -118,6 +121,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onTap: () async {
                           final prefs = await SharedPreferences.getInstance();
                           prefs.remove(AppConstants.userToken);
+                          Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (context) => LoginScreen()),
+                                (route) => false,
+                          );
                         },
                         child: Container(
                           margin: const EdgeInsets.only(right: 30),
@@ -211,10 +218,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               );
             }
             else if (state is UserFailureState) {
-              print("error called");
               child = Center(
                 key: const ValueKey("Error"),
-                child: Text(state.errorMessage),
+                child: ErrorScreen(message: state.errorMessage),
               );
             }
             else {

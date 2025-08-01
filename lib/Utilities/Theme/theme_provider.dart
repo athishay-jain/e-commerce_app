@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/Utilities/Data/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,6 +9,7 @@ loadTheme();
 }
 
   String theme = "System";
+VoidCallback callback=(){};
 loadTheme()async{
   SharedPreferences prefs=await SharedPreferences.getInstance();
   theme = prefs.getString("theme") ?? "System";
