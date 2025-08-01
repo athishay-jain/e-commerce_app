@@ -9,6 +9,9 @@ import 'package:ecommerce_app/Data/Bloc/Category_products/category_products_bloc
 import 'package:ecommerce_app/Data/Bloc/Product/product_bloc.dart';
 import 'package:ecommerce_app/Data/Bloc/Product/product_event.dart';
 import 'package:ecommerce_app/Data/Bloc/Product/product_state.dart';
+import 'package:ecommerce_app/Data/Bloc/User/user_bloc.dart';
+import 'package:ecommerce_app/Data/Bloc/User/user_event.dart';
+import 'package:ecommerce_app/Data/Bloc/User/user_state.dart';
 import 'package:ecommerce_app/Data/Model/Product/categories_model.dart';
 import 'package:ecommerce_app/Data/Model/Product/product_model.dart';
 import 'package:ecommerce_app/Screens/Categories_screen/category_products.dart';
@@ -36,68 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
     "assets/images/hero/watch.png",
   ];
   List<Map<String, dynamic>> categoriesItems = [
-    {"image": "assets/images/categories/frg.png", "name": "fridge"},
-    {"image": "assets/images/categories/phone.png", "name": "Phone"},
-    {"image": "assets/images/categories/tv.png", "name": "Tv"},
-    {"image": "assets/images/categories/lap.png", "name": "Laptop"},
-    {"image": "assets/images/categories/ac.png", "name": "Ac"},
-    {"image": "assets/images/categories/wash.png", "name": "Washing Machine"},
-  ];
-  List<Map<String, dynamic>> products = [
-    {
-      "image":
-          "https://content.jdmagicbox.com/quickquotes/images_main/atomberg-renesa-smart-bldc-iot-ceiling-fan-golden-oakwood-natural-oakwood-2220048496-fsjnlr3r.jpg?impolicy=queryparam&im=Resize=(360,360),aspect=fit",
-      "Name": "UltraCool Smart Fan",
-      "price": "2,499",
-      "mrp": "3,299",
-      "off": 20,
-      "id": 1,
-    },
-    {
-      "image":
-          "https://www.ifbappliances.com/media/opti_image/webp/catalog/product/cache/b0f3fdce25eaff9ceff91545b0591d40/s/e/serena-bxn-k-7.0kg-fv.webp",
-      "Name": "IFB Serena BXN 7012K CMS Front Load Washing Machine 7 kg",
-      "price": "34,490",
-      "mrp": "41,850",
-      "off": "18",
-      "id": 2,
-    },
-    {
-      "image":
-          "https://media-ik.croma.com/prod/https://media.croma.com/image/upload/v1729510459/Croma%20Assets/Entertainment/Television/Images/273733_0_w8e4qb.png",
-      "Name": "Chroma LED TV 43",
-      "price": "23,900",
-      "mrp": "23,900",
-      "off": "42",
-      "id": 3,
-    },
-    {
-      "image":
-          "https://www.simplyshopping.in/cdn/shop/products/716YmAfmCoL._SL1500_1200x1200.jpg?v=1676113454",
-      "Name": "SoundPro Bluetooth Speaker",
-      "price": "1,599",
-      "mrp": "2,199",
-      "off": "17",
-      "id": 4,
-    },
-    {
-      "image":
-          "https://electronicparadise.in/cdn/shop/files/Voltas_1.0_Ton_3_Star_Split_Air_Conditioner_123_Vectra_Elegant_1.webp?v=1739427287&width=640",
-      "Name": "CoolMist Air Conditioner",
-      "price": "38,500",
-      "mrp": "43,000",
-      "off": "35",
-      "id": 5,
-    },
-    {
-      "image":
-          "https://i5.walmartimages.com/asr/e3809b88-267e-4f13-bbb1-16e7cc98ee1b.75f3a22226dfbb1058c67906c0eaf942.jpeg",
-      "Name": "InstaBrew Coffee Maker",
-      "price": "3,750",
-      "mrp": "4,499",
-      "off": "50",
-      "id": 6,
-    },
+    {"image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4HOlYCk5n1XJ0KjnBrxAniNRbmyjxY6xogA&s", "name": "fridge"},
+    {"image": "https://crystalpng.com/wp-content/uploads/2025/05/lenovo-logo.png",},
+    {"image": "https://1000logos.net/wp-content/uploads/2017/02/Apple-Logosu.png",},
+    {"image": "https://pngimg.com/uploads/samsung_logo/samsung_logo_PNG8.png",},
+    {"image": "https://www.unboxify.in/cdn/shop/products/51zL2U_3bDL._SL1200.jpg?v=1694963807",},
+    {"image": "https://saudewala.in/cdn/shop/collections/Laptop.jpg?v=1732216115&width=1296", "name": "Washing Machine"},
+    {"image": "https://media.tatacroma.com/Croma%20Assets/Computers%20Peripherals/Tablets%20and%20iPads/Images/308032_eo0iwq.png", "name": "Washing Machine"},
+    {"image": "https://www-cdn.djiits.com/cms/uploads/ae5d8b9987be8d5ecdeb5d502a1e887c.png", "name": "Washing Machine"},
   ];
   int _currentBanner = 0;
   final CarouselController _carouselController = CarouselController();
@@ -107,7 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     context.read<ProductBloc>().add(LoadInitialProducts());
-    context.read<CategoriesBloc>().add(LoadCategoriesEvent());}
+    context.read<CategoriesBloc>().add(LoadCategoriesEvent());
+    context.read<UserBloc>().add(GetUserEvent());}
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +92,23 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 20, top: 16),
-                child: Text("Hello,Athishay👋", style: style.headlineLarge),
+                child: BlocBuilder<UserBloc,UserState>(builder: (context, state) {
+                  Widget child;
+                  if(state is UserLoadedState){
+                    child= Text("Hello,${state.user.name}👋", style: style.headlineLarge);
+                  }
+                  else{
+                    child = const SizedBox.shrink();
+                  }
+                  return AnimatedSwitcher(
+                    switchInCurve: Curves.easeIn,
+                    switchOutCurve: Curves.easeOut,
+                    duration: const Duration(milliseconds: 500),
+                    transitionBuilder: (child, animation) =>
+                        FadeTransition(opacity: animation, child: child),
+                    child: child,
+                  );
+                }),
               ),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -362,9 +328,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     backgroundColor: isDark
                                         ? Color(0xff2C2C2C)
                                         : Colors.white,
-                                  /*  backgroundImage: AssetImage(
+                                    backgroundImage: NetworkImage(
                                       categoriesItems[index]["image"],
-                                    ),*/
+                                    ),
                                   ),
                                 ),
                                 SizedBox(height: 6),
@@ -555,7 +521,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color: Colors.red,
                                     ),
                                     child: Text(
-                                      "${products[index]["off"]}%off",
+                                      "0%off",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontFamily: "pop",

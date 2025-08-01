@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/Data/Bloc/User/user_state.dart';
 import 'package:ecommerce_app/Data/Model/users/user_model.dart';
 
 abstract class UserEvent {}
@@ -14,3 +15,4 @@ class UserLoginEvent extends UserEvent {
 
   UserLoginEvent({required this.email, required this.password});
 }
+class GetUserEvent extends UserEvent{}

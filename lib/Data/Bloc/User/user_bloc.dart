@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:ecommerce_app/Data/Bloc/Cart/cart_state.dart';
 import 'package:ecommerce_app/Data/Bloc/User/user_event.dart';
 import 'package:ecommerce_app/Data/Bloc/User/user_state.dart';
+import 'package:ecommerce_app/Data/Model/users/profile_model.dart';
 import 'package:ecommerce_app/Data/Repository/user_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,9 +37,23 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString(AppConstants.userToken, user["tokan"]);
           emit(UserSuccessState(isSignup: false));
-        }
-        else{
+        } else {
           emit(UserFailureState(errorMessage: "${user['message']}"));
+        }
+      } catch (e) {
+        emit(UserFailureState(errorMessage: e.toString()));
+      }
+    });
+    on<GetUserEvent>((event, emit) async {
+      emit(UserLoadingState(isSignup: false));
+      try {
+        ProfileDataResponse response = await repo.getProfile();
+        print("the response is${response.message}");
+        if (response.status) {
+          emit(UserLoadedState(user: response.data));
+          print("printed");
+        } else {
+          emit(UserFailureState(errorMessage: response.message));
         }
       } catch (e) {
         emit(UserFailureState(errorMessage: e.toString()));

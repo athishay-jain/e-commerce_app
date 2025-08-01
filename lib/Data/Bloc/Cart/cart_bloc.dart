@@ -34,15 +34,18 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       try {
         CartDataModel cart = await cartRepo.getCart();
         if (cart.status) {
-          print(cart.data);
-          emit(
-            LoadedState(
-              cart: cart.data,
-              totalAmount: findTotalAmount(cart: cart.data),
-              message: "",
-            ),
-          );
-        } else {
+            emit(
+              LoadedState(
+                cart: cart.data,
+                totalAmount: findTotalAmount(cart: cart.data),
+                message: "",
+              ),
+            );
+        } else if(cart.message=="Cart data not found"){
+          emit(CartEmptyState());
+        }
+
+        else {
           emit(FailureState(errorMessage: cart.message));
         }
       } catch (e) {
@@ -63,7 +66,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                 message: res["message"],
               ),
             );
-          } else {
+          } else if(view.message=="Cart data not found"){
+            emit(CartEmptyState());
+          }
+
+          else {
             emit(FailureState(errorMessage: view.message));
           }
         } else {
@@ -102,7 +109,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         emit(FailureState(errorMessage: e.toString()));
       }
     });
-    on<DecrementQty>((event, emit)async {
+    on<DecrementQty>((event, emit) async {
       try {
         dynamic res = await cartRepo.decrementItem(
           product_id: event.product_id,
@@ -119,7 +126,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                 message: res["message"],
               ),
             );
-          } else {
+          } else if(cart.message=="Cart data not found"){
+            emit(CartEmptyState());
+          }
+
+          else {
             emit(FailureState(errorMessage: cart.message));
           }
         } else {
@@ -129,12 +140,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         emit(FailureState(errorMessage: e.toString()));
       }
     });
-    on<PlaceOrder>((event,emit)async{
+    on<PlaceOrder>((event, emit) async {
       emit(OrderLoadingState());
-      try{
+      try {
         dynamic res = await cartRepo.placeOrder(cart_id: event.cart_id);
         emit(OrderLoadedState(message: res["message"], success: res["status"]));
-      }catch(e){
+      } catch (e) {
         emit(FailureState(errorMessage: e.toString()));
       }
     });

@@ -40,8 +40,10 @@ class CartDataModel {
 
   factory CartDataModel.fromMap(Map<String, dynamic> json) {
     List<CartModel> data = [];
-    for (Map<String, dynamic> eachJson in json['data']) {
-      data.add(CartModel.fromMap(eachJson));
+    if(json['data']!=null) {
+      for (Map<String, dynamic> eachJson in json['data']) {
+        data.add(CartModel.fromMap(eachJson));
+      }
     }
     return CartDataModel(
       data: data,

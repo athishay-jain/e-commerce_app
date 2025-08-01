@@ -10,5 +10,6 @@ class AppUrls {
   static const String decrement = "$baseUrl/ecommerce-api/product/decrement-quantity";
   static const String placeOrder = "$baseUrl/ecommerce-api/product/create-order";
   static const String getOrder = "$baseUrl/ecommerce-api/product/get-order";
+  static const String getProfile = "$baseUrl/ecommerce-api/user/profile";
 
 }

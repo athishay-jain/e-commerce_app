@@ -26,6 +26,8 @@ class LoadedState extends CartState {
   });
 }
 
+class CartEmptyState extends CartState {}
+
 class OrderLoadedState extends CartState {
   bool success;
   String message;

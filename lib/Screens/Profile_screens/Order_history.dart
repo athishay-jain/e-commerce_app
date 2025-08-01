@@ -2,7 +2,6 @@ import 'package:ecommerce_app/Data/Bloc/Order/order_bloc.dart';
 import 'package:ecommerce_app/Data/Bloc/Order/order_event.dart';
 import 'package:ecommerce_app/Data/Bloc/Order/order_state.dart';
 import 'package:ecommerce_app/Data/Model/Product/Order_model.dart';
-import 'package:ecommerce_app/widgets/pop_effect.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';

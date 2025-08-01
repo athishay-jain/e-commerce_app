@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/Data/Helper/api_helper.dart';
+import 'package:ecommerce_app/Data/Model/users/profile_model.dart';
 import 'package:ecommerce_app/Utilities/Data/app_constants.dart';
 import 'package:ecommerce_app/Utilities/Data/app_url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,5 +39,11 @@ class UserRepository {
     } catch (e) {
       rethrow;
     }
+  }
+  Future<ProfileDataResponse>getProfile()async{
+    try{
+      dynamic res = await apiHelper.postApi(url: AppUrls.getProfile);
+      return ProfileDataResponse.fromJson(res);
+    }catch(e){rethrow;}
   }
 }
